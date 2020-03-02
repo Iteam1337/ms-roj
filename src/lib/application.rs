@@ -6,7 +6,7 @@ use crate::{
     MINES,
 };
 use gtk::{prelude::*, Button};
-use std::{cell::RefCell, rc::Rc};
+use std::{cell::RefCell, cmp::max, rc::Rc};
 
 pub struct Application {
     pub widget: Rc<Widget>,
@@ -80,10 +80,16 @@ impl Application {
             }
 
             let mut game = flood_game.borrow_mut();
+            let mut flagged_count = 0;
             for position in positions {
                 let (mut label, mut class_names) = (" ".to_string(), vec![]);
                 if let Some(field) = game.field.get_mut(&position) {
                     field.is_clicked = true;
+
+                    if field.is_flagged {
+                        field.is_flagged = false;
+                        flagged_count += 1;
+                    }
 
                     if field.mines_around != 0 {
                         label = field.mines_around.to_string();
@@ -112,6 +118,19 @@ impl Application {
                         ctx.add_class(&class);
                     }
                 }
+            }
+
+            if flagged_count > 0 {
+                let mut mines: i16 = flood_widget
+                    .mines_left
+                    .get_label()
+                    .unwrap()
+                    .parse()
+                    .unwrap_or(0);
+
+                mines = max(mines + flagged_count, 0);
+
+                flood_widget.mines_left.set_label(&mines.to_string());
             }
         };
 
@@ -248,14 +267,22 @@ impl Application {
                         let mut field = field.unwrap();
 
                         if flag && field.is_clicked == false {
-                            field.is_flagged = !field.is_flagged;
-
-                            let (label, class, add) = if field.is_flagged {
-                                ("🏴", "btn_flag", false)
+                            let flagged = !field.is_flagged;
+                            let (label, class, inc_mine_count) = if flagged {
+                                ("🚩", "btn_flag", false)
                             } else {
                                 (" ", "", true)
                             };
 
+                            if !inc_mine_count {
+                                let mines_left =
+                                    widget.mines_left.get_label().unwrap().parse().unwrap_or(0);
+                                if mines_left <= 0 {
+                                    break 'mut_closure;
+                                }
+                            }
+
+                            field.is_flagged = flagged;
                             button.set_relief(gtk::ReliefStyle::Normal);
                             button.set_label(&label.to_string());
 
@@ -272,11 +299,7 @@ impl Application {
                             let mut mines: i16 =
                                 widget.mines_left.get_label().unwrap().parse().unwrap_or(0);
 
-                            if add {
-                                mines += 1;
-                            } else {
-                                mines -= 1;
-                            }
+                            mines = max(if inc_mine_count { mines + 1 } else { mines - 1 }, 0);
 
                             widget.mines_left.set_label(&mines.to_string());
 

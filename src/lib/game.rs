@@ -41,11 +41,17 @@ pub struct Field {
 impl Field {
     pub fn mines_around_class_name(&self) -> String {
         format!(
-            "btn_close_{}",
+            "btn_close{}",
             match self.mines_around {
-                1 => "one",
-                2 => "two",
-                _ => "multiple",
+                1 => "_one",
+                2 => "_two",
+                3 => "_three",
+                4 => "_four",
+                5 => "_five",
+                6 => "_six",
+                7 => "_seven",
+                8 => "_eight",
+                _ => "",
             }
         )
         .to_string()

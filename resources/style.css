@@ -1,28 +1,94 @@
+label,
+button {
+  font-size: 40px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 900;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  background-color: #bfbfbf;
+  border: 3px solid #838589;
+  border-top-color: #fbfbfb;
+  border-left-color: #fbfbfb;
+}
+
+.window {
+  background-color: #bfbfbf;
+  border: 5px solid #838589;
+  border-top-color: #fbfbfb;
+  border-left-color: #fbfbfb;
+}
+
+.main {
+  border: 10px solid #bfbfbf;
+}
+
+.restart {
+  min-height: initial;
+  min-width: initial;
+}
+
+.top_bar {
+  background-color: #bfbfbf;
+  border: 3px solid #fbfbfb;
+  border-top-color: #838589;
+  border-left-color: #838589;
+}
+
+.mines {
+  border-style: inset;
+  background-color: #bfbfbf;
+  border: 5px solid #fbfbfb;
+  border-top-color: #838589;
+  border-left-color: #838589;
+}
+
+.mines button {
+  padding: 10px 0;
+}
+
+.mines_left,
+.time {
+  color: red;
+  background-color: #460000;
+  box-shadow: inset 0 0 12px 12px rgba(40, 5, 5, .3);
+}
+
+.btn_mine,
 .btn_empty,
 .btn_close {
-  background: none;
+  border: 1px solid #838589;
 }
 
-
+.btn_flag,
 .btn_mine {
-  background: #1D282D;
-}
-
-.btn_mine_clicked {
-  background: #991A18;
-}
-
-.btn_close {
+  background-color: #b5b5b5;
+  box-shadow: inset 0 0 12px 12px rgba(191, 191, 191, 1);
 }
 
 .btn_close_one {
-  color: #2A82AE;
+  color: #0041fa;
 }
-
 .btn_close_two {
-  color: #4EB02C;
+  color: #00781e;
 }
-
-.btn_close_multiple {
-  color: #991A18;
+.btn_close_three {
+  color: #B21313;
+}
+.btn_close_four {
+  color: #001f78;
+}
+.btn_close_five {
+  color: #830000;
+}
+.btn_close_six {
+  color: #008283;
+}
+.btn_close_seven {
+  color: #000000;
+}
+.btn_close_eight {
+  color: #7b7b7b;
 }
