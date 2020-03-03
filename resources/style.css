@@ -30,7 +30,7 @@ button {
   min-width: initial;
 }
 
-.top_bar {
+.top_bar__block {
   background-color: #bfbfbf;
   border: 3px solid #fbfbfb;
   border-top-color: #838589;
